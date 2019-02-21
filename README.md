@@ -3,10 +3,9 @@ Instructions for using the program
 With this programm, you can create all drawings for complete and complete bipartite graphs for a certain graph class.
 Also negative results can be obtained (no drawing possible for a certain graph).
 
-Currently the constraints for 5 graph classes are implemented:
+Currently the constraints for 4 graph classes are implemented:
 - Fan-crossing Free Graphs
 - Fan-planar Graphs
-- Gap-planar Graphs
 - K-planar Graphs
 - Quasi-planar Graphs
 
