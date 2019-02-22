@@ -8,6 +8,11 @@ import data.Metadata;
 import io.safeLoad.SafeLoad;
 import nodeInserter.NodeInserter;
 
+/**
+ * Class to create embeddings in a DFS-like manner.
+ * @author tommy
+ *
+ */
 public abstract class DFSEmbeddingCreator {
 	
 	private   int          embeddingId = -1;
@@ -215,15 +220,39 @@ public abstract class DFSEmbeddingCreator {
 	}
 
 	
+	/**
+	 * Returns the folder name for the vertex with number <code>vertex</code>.
+	 * This is for complete graphs.
+	 * @param vertex 	number of a vertex
+	 * @return			folder name
+	 */
 	public String getFolderName(int vertex) {
 		return graphClassName + "_" + vertex;
 	}
 
+	/**
+	 * Returns the folder name for the vertices with numbers <code>vertex1</code> and <code>vertex2</code>.
+	 * This is for complete graphs.
+	 * @param vertex1	number of first vertex
+	 * @param vertex2	number of second vertex
+	 * @return			folder name
+	 */
 	public String getFolderName(int vertex1, int vertex2) {
 		return graphClassName + "_" + vertex1 + "_" + vertex2;
 	}
 
 
+	/**
+	 * Calculates the embeddings. Saves an embedding on hard disc, if it is not possible
+	 * to insert more vertices (of a certain set) into it, and if there is no other
+	 * embedding already saved with the same crossing number.
+	 * @param emb				embedding to insert into
+	 * @param newIds			id's of new vertices (for printing)
+	 * @param vertex1			vertex of first bipartite set
+	 * @param vertex2			vertex of second bipartite set
+	 * @param extendSet1		true, if next vertex should be inserted into first bipartite set
+	 * @param alternatingMode	true, if vertices should inserted alternating into first and second bipartite set
+	 */
 	protected void calculateEmbeddings(Embedding emb, String newIds, int vertex1, int vertex2,
 			boolean extendSet1, boolean alternatingMode) {}
 }

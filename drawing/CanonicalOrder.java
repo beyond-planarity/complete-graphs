@@ -9,12 +9,21 @@ import data.Embedding;
 import data.Face;
 import data.Vertex;
 
+/**
+ * Class to calculate a canonical order for the vertices of a triangulated embedding. 
+ * @author tommy
+ *
+ */
 public class CanonicalOrder {
 	
 	private final Embedding                       triangulation;
 	private 	  Vertex[]                        vertexOrder;
 	private       HashMap<Integer, List<Integer>> children;      // adjacent vertices that come later in the vertex order
 	
+	/**
+	 * Creates a new <code>CanonicalOrder</code>.
+	 * @param triangulation	a triangulated embedding
+	 */
 	public CanonicalOrder(final Embedding triangulation) {
 		this.triangulation = triangulation;
 		this.vertexOrder   = new Vertex[triangulation.getNumberVerices()];
@@ -24,6 +33,9 @@ public class CanonicalOrder {
 		embeddings.add(triangulation);
 	}
 	
+	/**
+	 * Calculates a canonical order.
+	 */
 	public void calculate() {
 		
 		HashMap<Integer, Vertex> vertices = triangulation.getVertices();
@@ -136,10 +148,19 @@ public class CanonicalOrder {
 		}
 	}
 
+	/**
+	 * Returns the calculated canonical order.
+	 * @return an array of the vertices in canonical order
+	 */
 	public Vertex[] getVertexOrder() {
 		return vertexOrder;
 	}
 	
+	/**
+	 * Returns the children of the vertices. The children were obtained during the calculation
+	 * of the canonical order.
+	 * @return HashMap containing the children for every vertex
+	 */
 	public HashMap<Integer, List<Integer>> getChildren() {
 		return children;
 	}

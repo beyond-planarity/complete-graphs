@@ -4,6 +4,11 @@ import data.Statistics;
 import io.parseTree.Leaf;
 import io.parseTree.TreeElement;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class ParseTreeXMLStatisticsTranslator {
 	public int     totalCreated;
 	public int     nonIsomorphic;

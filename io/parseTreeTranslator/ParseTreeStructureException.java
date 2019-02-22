@@ -1,5 +1,10 @@
 package io.parseTreeTranslator;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 @SuppressWarnings("serial")
 public class ParseTreeStructureException extends Exception {
 

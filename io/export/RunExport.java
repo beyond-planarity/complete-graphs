@@ -9,7 +9,9 @@ import io.safeLoad.SafeLoad;
  */
 public class RunExport {
 	
+	// TODO: SPECIFY FOLDER NAME TO EXPORT
 	private static String folderName = "optfancrfree_4_5";
+	
 	
 	public static void main(String[] args) {
 		System.out.println("Exporting files ...");

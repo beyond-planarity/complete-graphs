@@ -8,6 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map.Entry;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class XMLTreeWriter {
 	
 	private static final String lineSeparator = "\n";

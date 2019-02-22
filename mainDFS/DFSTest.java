@@ -4,6 +4,12 @@ import drawing.DrawerDFS;
 import drawing.DrawingPositioner;
 import graphbuilderDFS.DFSEmbeddingCreator;
 
+/**
+ * Class to run tests for a graph class on complete and complete bipartite graphs,
+ * using the DFS-like approach.
+ * @author Tommy
+ *
+ */
 public class DFSTest {
 	
 	private DFSEmbeddingCreator graphCreator;

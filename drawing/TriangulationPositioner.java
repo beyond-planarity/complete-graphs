@@ -9,9 +9,22 @@ import data.Coordinate;
 import data.Embedding;
 import data.Vertex;
 
+/**
+ * Class to calculates the positions of all vertices in a triangulation. 
+ * @author tommy
+ *
+ */
 public class TriangulationPositioner {
 
 
+	/**
+	 * Calculates the positions of all vertices for the specified triangulation using
+	 * the specified canonical order.
+	 * @param triangulation	a triangulated embedding
+	 * @param vertexOrder	canonical order of the triangulation
+	 * @param children		children of vertices corresponding to canonical order
+	 * @return				the coordinates for each vertex
+	 */
 	public static HashMap<Integer, Coordinate> calculatePositions(
 			Embedding triangulation,
 			Vertex[] vertexOrder,

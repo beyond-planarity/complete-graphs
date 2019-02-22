@@ -16,10 +16,21 @@ import embeddingComparator.EmbeddingComparator;
 import io.safeLoad.SafeLoad;
 import nodeInserter.NodeInserter;
 
+/**
+ * Class for creating all bipartite complete graphs of a certain graph class.
+ * @author tommy
+ *
+ */
 public class OptBipartiteEmbeddingCreator extends OptEmbeddingCreator {
 	
 	private Tuple[] graphIndices;
 	
+	/**
+	 * Creates a new <code>OptBipartiteEmbeddingCreator</code>.
+	 * @param nodeInserter		node inserter to use
+	 * @param graphClassName	name of the graph class
+	 * @param graphIndices		specification of insertion order
+	 */
 	public OptBipartiteEmbeddingCreator(NodeInserter nodeInserter, String graphClassName,
 			Tuple[] graphIndices) {
 		super(nodeInserter, graphClassName, "_2_2");
@@ -106,9 +117,9 @@ public class OptBipartiteEmbeddingCreator extends OptEmbeddingCreator {
 	 * Creates all topologically different drawings of a bipartite graph
 	 * K_{to.first,to.second}, starting from K_{from.first,from.second}.
 	 * It <code>stopAfter</code> embeddings were created, it is stopped.
-	 * @param from
-	 * @param to
-	 * @param stopAfter
+	 * @param from		specifies source graph
+	 * @param to		specifies target graph
+	 * @param stopAfter	for interrupting search
 	 */
 	private void createKxy(Tuple from, Tuple to, int stopAfter) {
 		
@@ -162,9 +173,9 @@ public class OptBipartiteEmbeddingCreator extends OptEmbeddingCreator {
 	 * Continues to creates all topologically different drawings of a bipartite graph
 	 * K_{to.first,to.second}, starting from K_{from.first,from.second}.
 	 * It <code>stopAfter</code> embeddings were created, it is stopped.
-	 * @param from
-	 * @param to
-	 * @param stopAfter
+	 * @param from		specifies source graph
+	 * @param to		specifies target graph
+	 * @param stopAfter	for interrupting search
 	 */
 	private void continueCreateKxy(Tuple from, Tuple to, int stopAfter) {
 		
@@ -387,7 +398,7 @@ public class OptBipartiteEmbeddingCreator extends OptEmbeddingCreator {
 		System.out.println("--------------------------------------------------------------------------------------");
 	}
 
-
+	
 	public void calculateEmbeddings(int stopAfter, boolean tempAvailable) {
 		
 		if (graphIndices == null || graphIndices.length == 0) {

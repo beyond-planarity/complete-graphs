@@ -8,6 +8,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class XMLTreeReader {
 	
 	//private static final String lineSeparator = "\n";

@@ -1,5 +1,10 @@
 package data;
 
+/**
+ * Class for temporary data (for pausing the calculation)
+ * @author tommy
+ *
+ */
 public class TempData {
 	
 	public int     currentEmbId;

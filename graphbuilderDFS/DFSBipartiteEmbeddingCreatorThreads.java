@@ -12,8 +12,23 @@ import embeddingComparator.EmbeddingComparator;
 import io.safeLoad.SafeLoad;
 import nodeInserter.NodeInserter;
 
+
+/**
+ * Class to explore all complete bipartite embeddings of a specific beyond-planarity class.
+ * The exploration is done in all possible ways, that is: given an embedding it will be
+ * tried to insert a new node to each of the bipartite sets.
+ * Threads are used for this. 
+ * @author tommy
+ *
+ */
 public class DFSBipartiteEmbeddingCreatorThreads extends DFSEmbeddingCreator {
 
+
+	/**
+	 * Creates a new <code>DFSBipartiteEmbeddingCreatorThreads</code>.
+	 * @param nodeInserter		node inserter to use
+	 * @param graphClassName	name of the graph class
+	 */
 	public DFSBipartiteEmbeddingCreatorThreads(NodeInserter nodeInserter, String graphClassName) {
 		super(nodeInserter, graphClassName, "_3_3");
 	}

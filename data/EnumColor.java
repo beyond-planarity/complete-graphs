@@ -2,10 +2,26 @@ package data;
 
 import java.awt.Color;
 
+/**
+ * Definition for colors in the window.
+ * @author tommy
+ *
+ */
 public enum EnumColor {
 
-	SET1, SET2, CROSSING, NEW_NODE, EDGE, INFO, DRAWING_BACK, VERTEX_TEXT;
+	SET1,			// vertex in set1
+	SET2,			// vertex in set2
+	CROSSING,		// crossing
+	NEW_NODE,		// newly inserted vertex
+	EDGE,			// edge
+	INFO,			// information text
+	DRAWING_BACK,	// background of a drawing
+	VERTEX_TEXT;	// text for a vertex
 	
+	/**
+	 * Returns the color.
+	 * @return a color
+	 */
 	public Color getColor() {
 		switch(this) {
 		case SET1: default: return new Color(0,0,190);
@@ -19,10 +35,19 @@ public enum EnumColor {
 		}
 	}
 	
+	/**
+	 * Returns the name of this element.
+	 * @return name
+	 */
 	public String getString() {
 		return this.name();
 	}
 	
+	/**
+	 * Returns the value corresponding to the specified name. 
+	 * @param name 	name of a color
+	 * @return		the <code>EnumColor</code>
+	 */
 	public static EnumColor getEnumColor(String name) {
 		return EnumColor.valueOf(name);
 	}

@@ -8,6 +8,11 @@ import data.Statistics;
 import io.safeLoad.SafeLoad;
 import nodeInserter.NodeInserter;
 
+/**
+ * Class to create embeddings of a certain graph class.
+ * @author tommy
+ *
+ */
 public abstract class OptEmbeddingCreator {
 	
 	protected int          embeddingId = -1;
@@ -161,7 +166,12 @@ public abstract class OptEmbeddingCreator {
 	 */
 	public abstract void calculateEmbeddings(int stopAfter, boolean tempAvailable);
 	
-	
+	/**
+	 * Handles the case, when no embedding was found while trying to insert a new node. 
+	 * @param emb			emb into which no more vertices can be inserted
+	 * @param folderName	name of the folder to safe
+	 * @param graphIndex	index of the graph, to which <code>emb</code> corresponds
+	 */
 	protected void handleNoEmbeddingsFound(Embedding emb, String folderName, String graphIndex) {
 		if (SafeLoad.hasFolder(folderName)) {
 			if (!SafeLoad.hasEmbedding(folderName, emb.getCrossingNumber())) {
@@ -183,11 +193,21 @@ public abstract class OptEmbeddingCreator {
 		}
 	}
 
-	
+	/**
+	 * Returns the folder name for the specified vertex.
+	 * @param vertex	number of a vertex
+	 * @return			folder name
+	 */
 	public String getFolderName(int vertex) {
 		return graphClassName + "_" + vertex;
 	}
 
+	/**
+	 * Returns the folder name for the specified vertices.
+	 * @param vertex1	number of vertices in bipartite set 1
+	 * @param vertex2	number of vertices in bipartite set 2
+	 * @return			folder name
+	 */
 	public String getFolderName(int vertex1, int vertex2) {
 		return graphClassName + "_" + vertex1 + "_" + vertex2;
 	}

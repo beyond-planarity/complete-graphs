@@ -14,6 +14,11 @@ import data.Metadata;
 import data.Vertex;
 import io.safeLoad.SafeLoad;
 
+/**
+ * Class to test embeddings for isomorphism.
+ * @author tommy
+ *
+ */
 public class EmbeddingComparator {
 
 	/**
@@ -193,7 +198,7 @@ public class EmbeddingComparator {
 				currentEmbId = baseEmb.getNextEmbedding();
 
 				counter++;
-				if (counter % Constant.COMPARING_PROGRESS == 0) {
+				if (counter % Constant.EXTERNAL_COMPARING_PROGRESS == 0) {
 					System.out.println(strFront + counter + strBack + counterTopoEmbs);
 				}
 			}
@@ -255,7 +260,7 @@ public class EmbeddingComparator {
 			
 			
 			counter++;
-			if (counter % Constant.COMPARING_PROGRESS == 0) {
+			if (counter % Constant.EXTERNAL_COMPARING_PROGRESS == 0) {
 				System.out.println(strFront + counter + strBack + counterTopoEmbs);
 			}
 			
@@ -290,7 +295,7 @@ public class EmbeddingComparator {
 			embId = emb.getPrevEmbedding();
 
 			counter++;
-			if (counter % Constant.COMPARING_PROGRESS == 0) {
+			if (counter % Constant.EXTERNAL_COMPARING_PROGRESS == 0) {
 				System.out.println(strFront + counter + strBack);
 			}
 			

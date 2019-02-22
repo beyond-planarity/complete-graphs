@@ -3,6 +3,11 @@ package io.parseTree;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class Node extends TreeElement {
 	
 	private List<TreeElement> children;

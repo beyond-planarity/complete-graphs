@@ -2,7 +2,9 @@ package io.safeLoad;
 
 public enum EnumFileType {
 
-	XML, GML, TXT;
+	XML,	// safe in xml-like style
+	GML,	// safe in gml
+	TXT;	// safe as txt
 	
 	public static String getFileExtension(EnumFileType type) {
 		switch(type) {

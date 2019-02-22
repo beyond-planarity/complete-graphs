@@ -8,6 +8,11 @@ import data.Embedding;
 import data.EnumColor;
 import data.Vertex;
 
+/**
+ * Class to write to an gml file.
+ * @author tommy
+ *
+ */
 public class GMLWriter {
 	
 	private static final int    STRETCH_FACTOR_X = 60;

@@ -14,7 +14,7 @@ import nodeInserter.NodeInserter;
  * and then in the other until one both sets has the size of <code>finalVertex1</code>;
  * then new nodes will be inserted only in the second bipartite set; the first bipartite
  * set will from this point on have always the size of <code>finalVertex1</code>. 
- * @author Tommy
+ * @author tommy
  *
  */
 public class DFSBipartiteEmbeddingCreatorDiag extends DFSBipartiteEmbeddingCreatorSingle {
@@ -25,6 +25,12 @@ public class DFSBipartiteEmbeddingCreatorDiag extends DFSBipartiteEmbeddingCreat
 	private int finalVertex1;
 
 
+	/**
+	 * Creates a new <code>DFSBipartiteEmbeddingCreatorDiag</code>.
+	 * @param nodeInserter		node inserter to use
+	 * @param graphClassName	name of the considered graph class
+	 * @param finalVertex1		stop inserting into first set when this many vertices are present
+	 */
 	public DFSBipartiteEmbeddingCreatorDiag(NodeInserter nodeInserter, String graphClassName, int finalVertex1) {
 		super(nodeInserter, graphClassName);
 		this.finalVertex1 = finalVertex1;
@@ -56,7 +62,14 @@ public class DFSBipartiteEmbeddingCreatorDiag extends DFSBipartiteEmbeddingCreat
 		System.out.println("Finished. Total created in recursion: " + totalCreated + " - Total topologically equivalent: " + (totalCreated - totalTopo));
 	}
 	
-	
+	/**
+	 * Calculates embeddings for the bipartite graph with indices <code>vertex1</code> and <code>vertex2</code>.
+	 * @param emb			embedding to insert into
+	 * @param currentIds	for printing state
+	 * @param vertex1		number of vertices in bipartite set 1
+	 * @param vertex2		number of vertices in bipartite set 2
+	 * @param extendSet1	insert into set 1
+	 */
 	protected void calculateEmbeddings(Embedding emb, String currentIds,
 			int vertex1, int vertex2, boolean extendSet1) {
 		

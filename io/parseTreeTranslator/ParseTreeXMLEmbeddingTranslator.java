@@ -13,6 +13,11 @@ import io.parseTree.Leaf;
 import io.parseTree.Node;
 import io.parseTree.TreeElement;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class ParseTreeXMLEmbeddingTranslator {
 
 	private static final String L_EMBEDDING           = "em";

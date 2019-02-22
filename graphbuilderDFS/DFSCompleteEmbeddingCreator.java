@@ -11,6 +11,11 @@ import embeddingComparator.EmbeddingComparator;
 import io.safeLoad.SafeLoad;
 import nodeInserter.NodeInserter;
 
+/**
+ * Class to explore all complete embeddings of a specific beyond-planarity class.
+ * @author tommy
+ *
+ */
 public class DFSCompleteEmbeddingCreator extends DFSEmbeddingCreator {
 
 	private int totalCreated = 0;

@@ -23,6 +23,11 @@ import data.EnumColor;
 import data.Vertex;
 import io.safeLoad.SafeLoad;
 
+/**
+ * Class for showing drawings calculated with the DFS-like approach in a window.
+ * @author tommy
+ *
+ */
 public class DrawerDFS implements ActionListener  {
 
 	private String   folderName;
@@ -50,7 +55,10 @@ public class DrawerDFS implements ActionListener  {
 	private int       crossingNo;
 	
 	
-
+	/**
+	 * Creates a new <code>DrawerDFS</code>.
+	 * @param folderName name of the folder that contains the drawings
+	 */
 	public DrawerDFS(String folderName) {
 		this.windowTitle  = folderName;
 		this.folderName   = folderName;
@@ -61,16 +69,25 @@ public class DrawerDFS implements ActionListener  {
 		prepareGUI();
 	}
 	
+	/**
+	 * Loads the current embedding.
+	 */
 	private void loadEmbedding() {
 		this.drawing          = SafeLoad.loadEmbedding(folderName, fileNames[fileNo]);
 		this.crossingNo       = drawing.getCrossingNumber();
 	}
 	
+	/**
+	 * Prepares for showing the current drawing.
+	 */
 	private void loadDrawing() {
 		loadEmbedding();
 		canvasDrawing.setDrawing(drawing);
 	}
 	
+	/**
+	 * Shows the next drawing.
+	 */
 	private void nextEmbedding() {
 		fileNo++;
 		if (fileNo >= fileNames.length) {
@@ -79,7 +96,9 @@ public class DrawerDFS implements ActionListener  {
 		loadDrawing();
 		updatePainting();
 	}
-	
+	/**
+	 * Shows the previous drawing.
+	 */
 	private void previousEmbedding() {
 		fileNo--;
 		if (fileNo < 0) {
@@ -89,15 +108,18 @@ public class DrawerDFS implements ActionListener  {
 		updatePainting();
 	}
 	
-	
-	
+	/**
+	 * Updates the window.
+	 */
 	private void updatePainting() {
 		setLabels();
 		mainFrame.repaint();
 		canvasDrawing.repaint();
 	}
 
-	
+	/**
+	 * Initializes the window.
+	 */
 	private void prepareGUI() {
 		mainFrame = new Frame(windowTitle);
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -154,11 +176,17 @@ public class DrawerDFS implements ActionListener  {
 		mainFrame.setVisible(true);  
 	}
 	
+	/**
+	 * Sets the information for the current drawings. 
+	 */
 	private void setLabels() {
 		numberLabel.setText("Number: " + (fileNo+1) + " of " + fileNames.length);
 		crossingLabel.setText("Crossings: " + crossingNo);
 	}
 
+	/**
+	 * Shows the window.
+	 */
 	public void show(){
 		setLabels();
 		
@@ -172,21 +200,37 @@ public class DrawerDFS implements ActionListener  {
 	} 
 
 
+	/**
+	 * Class for showing the current drawing.
+	 * @author tommy
+	 *
+	 */
 	@SuppressWarnings("serial")
 	class MyCanvas extends Canvas {
 		
 		private Embedding emb;
 		private boolean   areVerticesMapped = false;
 
+		/**
+		 * Creates a new <code>MyCanvas</code>.
+		 */
 		public MyCanvas () {
 			setBackground(EnumColor.DRAWING_BACK.getColor());
 			setSize(Constant.CANVAS_WIDTH, Constant.CANVAS_HEIGHT);
 		}
 		
+		/**
+		 * Show the mapping of all vertices.
+		 * @param show	true, if mapping should be shown 
+		 */
 		public void showMapping(boolean show) {
 			areVerticesMapped = show;
 		}
 		
+		/**
+		 * Sets the current drawing.
+		 * @param drawing the new drawing to show
+		 */
 		public void setDrawing(Embedding drawing) {
 			this.emb = drawing;
 		}

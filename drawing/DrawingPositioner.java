@@ -12,19 +12,26 @@ import data.Metadata;
 import data.Vertex;
 import io.safeLoad.SafeLoad;
 
+/**
+ * Class to position the vertices of all drawings in a certain folder.
+ * @author tommy
+ *
+ */
 public class DrawingPositioner {
 
-	private String folder;
+	private String folder; // name of folder on hard disc
 	
+	/**
+	 * Creates a new <code>DrawingPositioner</code>
+	 * @param folder folder with the drawings
+	 */
 	public DrawingPositioner(String folder) {
 		this.folder = folder;
 	}
 
 	
-	
 	/**
-	 * Calculate the position and the color of all embeddings in the
-	 * given folder.
+	 * Calculate the position and the color of all embeddings in the given folder.
 	 * @param newVertexName name of the new vertex
 	 */
 	public void calcPosAndColorSmallSize(String newVertexName) {
@@ -54,8 +61,7 @@ public class DrawingPositioner {
 	
 
 	/**
-	 * Calculate the position and the color of all embeddings in the
-	 * given folder.
+	 * Calculate the position and the color of all embeddings in the given folder.
 	 * @param newVertexName name of the new vertex
 	 */
 	public void calcPosAndColorLargeSize(String newVertexName) {
@@ -89,9 +95,10 @@ public class DrawingPositioner {
 	}
 	
 	/**
-	 * Creates the drawing for the given embedding.
+	 * Calculates the positions for the specified embedding.
+	 * Also calculates additional information for showing the embedding on the screen.
 	 * @param embedding		embedding
-	 * @param newVertexName	name of the last inserted vertex
+	 * @param newVertexName	name of the lastly inserted vertex
 	 * @return				the drawing
 	 */
 	private void calcPos(Embedding embedding, String newVertexName) {
@@ -201,7 +208,9 @@ public class DrawingPositioner {
 	
 	
 	
-	
+	/**
+	 * Calculates the stretched coordinates for all embeddings.
+	 */
 	public void calculateStretchedCoordinates() {
 		if (SafeLoad.isEmpty(folder)) {
 			return;
@@ -230,7 +239,10 @@ public class DrawingPositioner {
 		} while (id != firstId);
 	}
 		
-	
+	/**
+	 * Calculates the stretched Coordinates for the specified embedding.
+	 * @param emb	an embedding
+	 */
 	private void calcStrechedPos(Embedding emb) {
 		// save the positions of the nodes
 		int maxX = Integer.MIN_VALUE;

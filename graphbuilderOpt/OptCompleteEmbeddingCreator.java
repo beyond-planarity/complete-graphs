@@ -14,11 +14,23 @@ import embeddingComparator.EmbeddingComparator;
 import io.safeLoad.SafeLoad;
 import nodeInserter.NodeInserter;
 
+/**
+ * Class for creating all complete graphs of a certain graph class.
+ * @author tommy
+ *
+ */
 public class OptCompleteEmbeddingCreator extends OptEmbeddingCreator {
 	
 	private int startGraphIndex;
 	private int endGraphIndex;
 	
+	/**
+	 * Creates a new <code>OptCompleteEmbeddingCreator</code>.
+	 * @param nodeInserter		node inserter to use
+	 * @param graphClassName	name of the graph class
+	 * @param startGraphIndex   specification of first graph
+	 * @param endGraphIndex   specification of last graph
+	 */
 	public OptCompleteEmbeddingCreator(NodeInserter nodeInserter, String graphClassName,
 			int startGraphIndex, int endGraphIndex) {
 		super(nodeInserter, graphClassName, "_3");
@@ -107,7 +119,7 @@ public class OptCompleteEmbeddingCreator extends OptEmbeddingCreator {
 	 * K_{targetX}, starting from embeddings of K_{targetX-1}.
 	 * It <code>stopAfter</code> embeddings were created, it is stopped.
 	 * @param targetX	final K_{x} to create
-	 * @param stopAfter 
+	 * @param stopAfter for interrupting search
 	 */
 	private void continueCreateKx(int targetX, int stopAfter) {
 		

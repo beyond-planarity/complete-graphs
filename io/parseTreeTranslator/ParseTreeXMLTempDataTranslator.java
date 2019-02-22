@@ -4,6 +4,11 @@ import data.TempData;
 import io.parseTree.Leaf;
 import io.parseTree.TreeElement;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class ParseTreeXMLTempDataTranslator {
 	
 	private static final String L_TEMP               = "tempdata";

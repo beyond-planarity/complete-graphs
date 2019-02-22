@@ -9,8 +9,19 @@ import data.Embedding;
 import data.Face;
 import data.Vertex;
 
+/**
+ * Class to triangulate a simple planar embedding.
+ * @author tommy
+ *
+ */
 public class Triangulator {
 	
+	/**
+	 * Triangulates the specified embedding.
+	 * @param embedding			a simple planar embedding
+	 * @param triangulationId	id the triangulation will get
+	 * @return					a triangulated embedding
+	 */
 	public static Embedding triangulate(final Embedding embedding, int triangulationId) {
 
 		Embedding triangulation      = embedding.copy(triangulationId);

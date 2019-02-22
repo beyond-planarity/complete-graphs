@@ -16,7 +16,7 @@ import nodeInserter.NodeInserter;
  * Class to explore all complete bipartite embeddings of a specific beyond-planarity class.
  * The exploration is done in all possible ways, that is: given an embedding it will be
  * tried to insert a new node to each of the bipartitional sets. 
- * @author Tommy
+ * @author tommy
  *
  */
 public class DFSBipartiteEmbeddingCreatorSingle extends DFSEmbeddingCreator {
@@ -24,11 +24,18 @@ public class DFSBipartiteEmbeddingCreatorSingle extends DFSEmbeddingCreator {
 	private int totalCreated = 0;
 	private int totalTopo    = 0;
 	
-	
+	/**
+	 * Creates a new <code>DFSBipartiteEmbeddingCreatorSingle</code>.
+	 * @param nodeInserter		node inserter to use
+	 * @param graphClassName	name of the graph class
+	 */
 	public DFSBipartiteEmbeddingCreatorSingle(NodeInserter nodeInserter, String graphClassName) {
 		super(nodeInserter, graphClassName, "_3_3");
 	}
 		
+	/**
+	 * Creates the two drawings of K_{2,2}.
+	 */
 	protected List<Embedding> createPlanarStartEmbeddings(boolean useGaps) {
 		System.out.println("Creating Start Embeddings ...");
 		
@@ -83,6 +90,9 @@ public class DFSBipartiteEmbeddingCreatorSingle extends DFSEmbeddingCreator {
 		return startEmbs;
 	}
 	
+	/**
+	 * Creates the base embeddings, that is, all non-isomorphic embeddings of K_{3,3}.
+	 */
 	protected List<Embedding> createBaseEmbeddings(List<Embedding> startEmbeddings) {
 		System.out.println("Creating K_{3,3} ...");
 		
@@ -136,7 +146,6 @@ public class DFSBipartiteEmbeddingCreatorSingle extends DFSEmbeddingCreator {
 		System.out.println("Finished. Total created in recursion: " + totalCreated + " - Total topologically equivalent: " + (totalCreated - totalTopo));
 	}
 	
-	
 	protected void calculateEmbeddings(Embedding emb, String currentIds, int vertex1, int vertex2,
 			boolean extendSet1, boolean alternatingMode) {
 		if(isTimeToPrint()) {
@@ -180,6 +189,12 @@ public class DFSBipartiteEmbeddingCreatorSingle extends DFSEmbeddingCreator {
 		}
 	}
 	
+	/**
+	 * Returns a string for printing the graph indices
+	 * @param vertex1	vertices in set 1
+	 * @param vertex2	vertices in set 2
+	 * @return			string representation
+	 */
 	protected String getGraphIndex(int vertex1, int vertex2) {
 		return "(" + vertex1 + "," + vertex2 + ")";
 	}

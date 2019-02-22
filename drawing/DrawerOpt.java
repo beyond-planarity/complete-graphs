@@ -24,6 +24,11 @@ import data.Metadata;
 import data.Vertex;
 import io.safeLoad.SafeLoad;
 
+/**
+ * Class for showing drawings calculated with the normal approach in a window.
+ * @author tommy
+ *
+ */
 public class DrawerOpt implements ActionListener  {
 
 	private String   folderName;
@@ -58,6 +63,11 @@ public class DrawerOpt implements ActionListener  {
 	private int     crossingNo;
 	private boolean insertionPossible;
 
+	/**
+	 * Creates a new <code>DrawerOpt</code>.
+	 * @param folderName	name of the folder that contains the drawings
+	 * @param windowTitle	titel of this window
+	 */
 	public DrawerOpt(String folderName, String windowTitle) {
 		this.windowTitle  = windowTitle;
 		this.folderName   = folderName;
@@ -68,39 +78,55 @@ public class DrawerOpt implements ActionListener  {
 		loadEmbedding();
 		prepareGUI();
 	}
-	
+
+	/**
+	 * Loads the current embedding.
+	 */
 	private void loadEmbedding() {
 		this.drawing          = SafeLoad.loadEmbedding(folderName, drawingId);
 		this.sourceGraphId    = drawing.getSourceEmbeddingId();
 		this.crossingNo       = drawing.getCrossingNumber();
 		this.drawingNr        = drawing.getDrawingNr();
 	}
-	
+
+	/**
+	 * Prepares for showing the current drawing.
+	 */
 	private void loadDrawing() {
 		loadEmbedding();
 		canvasDrawing.setDrawing(drawing);
 	}
-	
+
+	/**
+	 * Shows the next drawing.
+	 */
 	private void nextEmbedding() {
 		drawingId = drawing.getNextEmbedding();
 		loadDrawing();
 		updatePainting();
 	}
-	
+
+	/**
+	 * Shows the previous drawing.
+	 */
 	private void previousEmbedding() {
 		drawingId = drawing.getPrevEmbedding();
 		loadDrawing();
 		updatePainting();
 	}	
-	
-	
+
+	/**
+	 * Updates the window.
+	 */
 	private void updatePainting() {
 		setLabels();
 		mainFrame.repaint();
 		canvasDrawing.repaint();
 	}
 
-	
+	/**
+	 * Initializes the window.
+	 */
 	private void prepareGUI() {
 		mainFrame = new Frame(windowTitle);
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -169,7 +195,10 @@ public class DrawerOpt implements ActionListener  {
 		mainPanel.add(drawingPanel);
 		mainFrame.setVisible(true);  
 	}
-	
+
+	/**
+	 * Sets the information for the current drawings. 
+	 */
 	private void setLabels() {
 		numberLabel.setText("Number: " + drawingNr + " of " + metadata.getNumberEmbeddingsTotal());
 		graphIdLabel.setText("Graph ID: " + drawingId); 
@@ -178,6 +207,9 @@ public class DrawerOpt implements ActionListener  {
 		insertionPossibleLabel.setText("Insertion possible: " + insertionPossible);
 	}
 
+	/**
+	 * Shows the window.
+	 */
 	public void show(){
 		setLabels();
 		
@@ -191,21 +223,38 @@ public class DrawerOpt implements ActionListener  {
 	} 
 
 
+	/**
+	 * Class for showing the current drawing.
+	 * @author tommy
+	 *
+	 */
 	@SuppressWarnings("serial")
 	class MyCanvas extends Canvas {
 		
 		private Embedding emb;
 		private boolean   areVerticesMapped = false;
 
+		/**
+		 * Creates a new <code>MyCanvas</code>.
+		 */
 		public MyCanvas () {
 			setBackground(EnumColor.DRAWING_BACK.getColor());
 			setSize(Constant.CANVAS_WIDTH, Constant.CANVAS_HEIGHT);
 		}
-		
+
+		/**
+		 * Show the mapping of all vertices.
+		 * @param show	true, if mapping should be shown 
+		 */
 		public void showMapping(boolean show) {
 			areVerticesMapped = show;
 		}
+
 		
+		/**
+		 * Sets the current drawing.
+		 * @param drawing the new drawing to show
+		 */
 		public void setDrawing(Embedding drawing) {
 			this.emb = drawing;
 		}

@@ -1,5 +1,10 @@
 package io.parseTree;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public class Leaf extends TreeElement {
 	
 	String text;

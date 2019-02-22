@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * Class to help saving.
+ * @author tommy
+ *
+ */
 public abstract class TreeElement {
 	
 	private String name;
