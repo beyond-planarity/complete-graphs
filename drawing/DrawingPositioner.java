@@ -65,7 +65,7 @@ public class DrawingPositioner {
 	 * @param newVertexName name of the new vertex
 	 */
 	public void calcPosAndColorLargeSize(String newVertexName) {
-		if (SafeLoad.isEmpty(folder)) {
+		if (!SafeLoad.hasMetaData(folder)) {
 			return;
 		}
 		
@@ -90,7 +90,6 @@ public class DrawingPositioner {
 				System.out.println(strFront + counter + strBack);
 			}
 			counter++;
-			
 		} while (id != firstId);
 	}
 	
@@ -111,7 +110,8 @@ public class DrawingPositioner {
 				triangulation,
 				canonicalOrder.getVertexOrder(),
 				canonicalOrder.getChildren());
-
+		
+		
 		// color the nodes
 		for (Vertex v : embedding.getVertices().values()) {
 			if (v.isCrossing()) {
@@ -202,7 +202,7 @@ public class DrawingPositioner {
 				realV = embedding.getVertex(realTargetId);
 			}
 			
-			embedding.setVertexName(gapId, /*v.getInitName() +*/ "*" + realV.getName());			
+			embedding.setVertexName(gapId, /*embedding.getVertex(gapId).getInitName() +*/ "*" + realV.getName());			
 		}
 	}
 	

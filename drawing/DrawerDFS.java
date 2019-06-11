@@ -2,7 +2,6 @@ package drawing;
 
 import java.awt.Button;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -141,10 +140,10 @@ public class DrawerDFS implements ActionListener  {
 		
 		crossingsColLabel = new Label();
 		crossingsColLabel.setAlignment(Label.LEFT);
-		crossingsColLabel.setText("Crossings are red.");
+		crossingsColLabel.setText(Constant.CROSSING_COLOR);
 		twoPartitionColLabel = new Label();
 		twoPartitionColLabel.setAlignment(Label.LEFT);
-		twoPartitionColLabel.setText("Nodes of the 2-set are blue.");
+		twoPartitionColLabel.setText(Constant.SETS_COLOR);
 		numberLabel = new Label();
 		numberLabel.setAlignment(Label.LEFT);
 		crossingLabel = new Label();
@@ -258,7 +257,7 @@ public class DrawerDFS implements ActionListener  {
 				g2.drawLine(x1, y1, x2, y2);
 				
 				// write source to the edges
-				g2.setColor(Color.WHITE);
+				g2.setColor(EnumColor.EDGE_TEXT.getColor());
 				g2.drawString(areVerticesMapped ? e.getMappedName() : e.getName(), (x1+x2)/2, (y1+y2)/2);
 			}
 			

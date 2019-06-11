@@ -10,7 +10,7 @@ import io.safeLoad.SafeLoad;
 public class RunExport {
 	
 	// TODO: SPECIFY FOLDER NAME TO EXPORT
-	private static String folderName = "optfancrfree_4_5";
+	private static String folderName = "dfsgapplanar_4_9";
 	
 	
 	public static void main(String[] args) {

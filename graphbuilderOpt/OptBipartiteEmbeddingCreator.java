@@ -262,7 +262,8 @@ public class OptBipartiteEmbeddingCreator extends OptEmbeddingCreator {
 				try {
 					newEmbeddings.addAll(insertNewNode(baseEmb, newNodeName, connectToSet1, vertexSetSwitchNeeded));
 				} catch (Exception e) {
-					System.out.println("STOPING: There was an exception. Data were saved. Counter is at " + counter);
+					System.out.println("STOPING: There was an exception. Current embedding is " + currentEmbId);
+					e.printStackTrace();
 					return;
 				}
 				

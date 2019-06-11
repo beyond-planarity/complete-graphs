@@ -13,7 +13,7 @@ public class TestKPlanar extends TestCase {
 	
 	protected TestKPlanar() {
 		
-	    int PLANARITY  = 4;
+	    int PLANARITY  = 2;
 		
 		CLASS_NAME     = "opt" + PLANARITY + "planar";
 		USE_GAPS       = false;
@@ -41,13 +41,13 @@ public class TestKPlanar extends TestCase {
 
 		long time = System.currentTimeMillis();
 		
-		//test.initComplete();
-		//test.testComplete();
+		test.initComplete();
+		test.testComplete();
 		//test.prepareDrawingComplete(5);
 		//test.drawComplete(5);
 
 		//test.initBipartite();
-		test.testBipartite();
+		//test.testBipartite();
 		//test.prepareDrawingBipartite(3,3,false);
 		//test.drawBipartite(3,3);
 

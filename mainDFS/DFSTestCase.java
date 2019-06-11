@@ -13,7 +13,7 @@ import nodeInserter.NodeInserter;
 public abstract class DFSTestCase {
 	
 	protected String  CLASS_NAME;	
-	protected boolean USE_GAPS; //TODO: implement
+	protected boolean USE_GAPS;		// for the gap-planar graphs
 
 	// calculate all drawings for base drawings with id start to end
 	protected int START;
@@ -37,7 +37,7 @@ public abstract class DFSTestCase {
 	
 	protected void initComplete() {
 		DFSTest tc = new DFSTest(cgc);
-		tc.init(false);
+		tc.init(USE_GAPS);
 	}
 	protected void testComplete() {
 		DFSTest tc = new DFSTest(cgc);
@@ -54,7 +54,7 @@ public abstract class DFSTestCase {
 	
 	protected void initBipartite() {
 		DFSTest tc = new DFSTest(bgc);
-		tc.init(false);
+		tc.init(USE_GAPS);
 	}	
 	protected void testBipartite() {
 		DFSTest tc = new DFSTest(bgc);

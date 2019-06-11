@@ -1,14 +1,16 @@
 package data;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class Embedding {
 
-	public static final String SET1_LETTER = "v"; // letter for first bipartite set
-	public static final String SET2_LETTER = "u"; // letter for second bipartite set
+	public static final String SET1_LETTER = "b"; // letter for first bipartite set
+	public static final String SET2_LETTER = "r"; // letter for second bipartite set
 	
 	protected int     id;
 	protected int     sourceEmbeddingId;    // id of the embedding this embedding was created from
@@ -1275,17 +1277,56 @@ public class Embedding {
 	 * @return		result of test
 	 */
 	public boolean hasWholeEdgeGap(int edge) {
-		List<Integer> wholeE = getWholeEdge(edge);
-		for (int eId : wholeE) {
-			Edge e = getEdge(eId);
-			if (gapCrossingToEdge.containsKey(e.getTarget().getId())) {
-				int mappedEdge = gapCrossingToEdge.get(e.getTarget().getId());
-				if (wholeE.contains(mappedEdge)) {
-					return true;
-				}
+		Set<Tuple> edges = new HashSet<Tuple>();
+		
+		for (int edgeId : gapCrossingToEdge.values()) {
+			int source = getRealSource(edgeId);
+			int target = getRealTarget(edgeId);
+			if (source > target) {
+				int temp = source;
+				source = target;
+				target = temp;
+			}
+			edges.add(new Tuple(source, target));
+		}
+		
+		int edgeS = getRealSource(edge);
+		int edgeT = getRealTarget(edge);
+		if (edgeS > edgeT) {
+			int temp = edgeS;
+			edgeS    = edgeT;
+			edgeT    = temp;
+		}
+		return edges.contains(new Tuple(edgeS, edgeT));
+	}
+	
+	
+	
+	/**
+	 * Tests if the current drawing is gap-planar.
+	 * @return result of the test 
+	 */
+	public boolean areGapsValid() {
+		Set<Tuple> edges = new HashSet<Tuple>();
+		
+		for (Entry<Integer,Integer> entry : gapCrossingToEdge.entrySet()) {
+			int edgeId = entry.getValue();
+			int source = getRealSource(edgeId);
+			int target = getRealTarget(edgeId);
+			if (source > target) {
+				int temp = source;
+				source = target;
+				target = temp;
+			}
+			Tuple e = new Tuple(source, target);
+			if (edges.contains(e)) {
+				return false;
+			}
+			else {
+				edges.add(e);
 			}
 		}
-		return false;
+		return true;
 	}
 	
 }

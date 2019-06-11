@@ -82,9 +82,10 @@ public class NodeInserterFanPlanar extends NodeInserter {
 		}
 		
 		
-		
-		// 0 crossings for first edge: insert new vertex into face incident <code>to firstVertex</code>.
+		// iterate over all faces incident to first vertex
 		for (Face f : incidentFaces) {
+			
+			// 0 crossings for first edge: insert new vertex into face incident <code>to firstVertex</code>.
 			Embedding embedding0 = getCopy(embedding);
 			
 			int newVertexId = embedding0.createVertex().getId();
@@ -94,11 +95,9 @@ public class NodeInserterFanPlanar extends NodeInserter {
 			if (PRINT) {
 				System.out.println("Found new intermetiate embedding - ID: " + embedding0.getId() + " (0 crossings 2nd edge)");
 			}
-		}
 
-		// determine recursively the faces in which the new vertex can be placed
-		// and all possible paths to this edge.
-		for (Face f : incidentFaces){
+			// determine recursively the faces in which the new vertex can be placed
+			// and all possible paths to this edge.
 			Embedding emb = getCopy(embedding);
 			createEdgeToFirstVertexHelper(emb, f.getId(), prohibitedEdges, firstVertex, -1, 0);
 		}
@@ -262,6 +261,7 @@ public class NodeInserterFanPlanar extends NodeInserter {
 		
 				
 		for (Face f : incidentFaces) {
+			
 			// 0 crossing for the new edge
 			if (emb.hasFaceVertex(f.getId(), target)) {
 				Embedding newEmb = getCopy(emb);
@@ -272,9 +272,8 @@ public class NodeInserterFanPlanar extends NodeInserter {
 					System.out.println("Found new intermetiate embedding - ID: " + newEmb.getId() + " (0 crossings 2nd edge)");
 				}
 			}
-		}
-
-		for (Face f : incidentFaces){		
+			
+			// more crossings for the new edge
 			connectNodesHelper(
 					emb,
 					target,

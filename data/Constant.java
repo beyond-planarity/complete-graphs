@@ -16,6 +16,8 @@ public class Constant {
 	public static final int DRAWING_PROGRESS = 500;
 	// interval to print progress when migrating after changing file-structure
 	public static final int MIGRATION_PROGRESS = 500;
+	// interval to print progress when counting something
+	public static final int COUNTING_PROGRESS = 1000;
 	
 	// when inserting a new vertex, first save new drawings in memory, until this limit is passed
 	public static final int EMBEDDING_RAM_LIST_SIZE = 25000;
@@ -32,4 +34,8 @@ public class Constant {
 	public static final int CANVAS_HEIGHT = 940;  // 800
 	// the size (higth and width) of a node in the window (calculate positions for the drawings again after changing this!!!)
 	public static final int NODE_SIZE     = 18;
+	// text on the information bar
+	public static final String CROSSING_COLOR = "Crossings are lilac.";
+	public static final String SETS_COLOR     = "Nodes of the bip. sets are blue and red.";
+	public static final String NEW_COLOR      = "Currently added nodes are green.";
 }
