@@ -7,7 +7,7 @@ import data.Statistics;
 import io.safeLoad.SafeLoad;
 
 /**
- * Class for migrating saved files.
+ * Class for calculating the minimum and maximum number of crossings for a certain graph.
  * @author tommy
  *
  */

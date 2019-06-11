@@ -3,11 +3,12 @@ Instructions for using the program
 With this programm, you can create all drawings for complete and complete bipartite graphs for a certain graph class.
 Also negative results can be obtained (no drawing possible for a certain graph).
 
-Currently the constraints for 4 graph classes are implemented:
+Currently the constraints for 5 graph classes are implemented:
 - Fan-crossing Free Graphs
 - Fan-planar Graphs
 - K-planar Graphs
 - Quasi-planar Graphs
+- Gap-planar Graphs
 
 For negative results, use the normal search (be aware that for this a lot of space on the hard-disc might be requiered).
 If there is no chance to obtain negative results in appropriate time, use the DFS-like search to obtain at
@@ -74,6 +75,11 @@ and labels of the vertices und the labels of the edges).
 - test.drawBipartite(*index1*, *index2*): Show the drawings for K_{*index1*, *index2*} in a window (before this, execute
 test.prepareDrawingBipartite(*index1*, *index2*))
 
+
+--------
+SEARCH WITH MORE INFORMATION: mainExt
+--------
+The difference to mainOpt is that here all the drawings that where created (even the isomorphic ones) in the insertion process are stored. This type of search takes longer compared to the previous one, since there will be many accesses to the disc.
 
 
 --------------------------------------
