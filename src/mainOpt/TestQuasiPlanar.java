@@ -2,59 +2,54 @@ package mainOpt;
 
 import data.Tuple;
 import nodeInserter.NodeInserter;
-import nodeInserter.NodeInserterFanPlanar;
+import nodeInserter.NodeInserterQuasiPlanar;
 
 /**
- * Tests for fan-planar graph class
+ * Tests for quasiplanar graph class
  * @author Tommy
  *
  */
-public class TestFanPlanar extends TestCase {
+public class TestQuasiPlanar extends TestCase {
 	
-	protected TestFanPlanar() {
+	protected TestQuasiPlanar() {
 		
-		CLASS_NAME     = "optfanplanar";
+		CLASS_NAME     = "optquasiplanar";
 		USE_GAPS       = false;
 		
 		STOP_AFTER     = Integer.MAX_VALUE;
 		TEMP_AVAILABLE = false;
 		
 		START_INDEX    = 4;
-		END_INDEX      = 8; 
+		END_INDEX      = 12; 
 		
 		Tuple[] biIndices = {
-				new Tuple(2,2),
-				new Tuple(2,3),
-				new Tuple(3,3),
-				new Tuple(3,4),
 				new Tuple(4,4),
-				new Tuple(4,5),
-				new Tuple(5,5)
+				new Tuple(4,5)
 		};
 		INDICES = biIndices;
 
-		NodeInserter inserter = new NodeInserterFanPlanar();
+		NodeInserter inserter = new NodeInserterQuasiPlanar();
 		setNodeInserter(inserter);
 	}
-
+	
+	
 	public static void main(String[] args) {
 		
-		TestCase test = new TestFanPlanar();
+		TestCase test = new TestQuasiPlanar();
 
 		long time = System.currentTimeMillis();
 		
-		//test.initComplete();
-		//test.testComplete();
+		test.initComplete();
+		test.testComplete();
 		//test.prepareDrawingComplete(5);
 		//test.drawComplete(5);
 
-		test.initBipartite();
-		test.testBipartite();
+		//test.initBipartite();
+		//test.testBipartite();
 		//test.prepareDrawingBipartite(4,5,false);
 		//test.drawBipartite(4,5);
 
 		long dif = System.currentTimeMillis() - time;
 		System.out.println("PROGRAM FINISHED - TIME: " + dif);
 	}
-
 }

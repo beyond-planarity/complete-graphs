@@ -43,13 +43,13 @@ public class TestFanCrossingFree extends TestCase {
 
 		long time = System.currentTimeMillis();
 		
-		//test.initComplete();
-		//test.testComplete();
+		test.initComplete();
+		test.testComplete();
 		//test.prepareDrawingComplete(6);
 		//test.drawComplete(6);
 
-		test.initBipartite();
-		test.testBipartite();
+		//test.initBipartite();
+		//test.testBipartite();
 		//test.prepareDrawingBipartite(4,5,false);
 		//test.drawBipartite(4,5);
 

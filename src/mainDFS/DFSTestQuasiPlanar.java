@@ -30,10 +30,10 @@ public class DFSTestQuasiPlanar extends DFSTestCase {
 		//test.prepareDrawingComplete();
 		//test.drawComplete(7);
 
-		test.initBipartite();
+		//test.initBipartite();
 		//test.testBipartite();
-		//test.prepareDrawingBipartite(6,10);
-		//test.drawBipartite(6,10);
+		//test.prepareDrawingBipartite(5,6);
+		test.drawBipartite(5,6);
 
 		long dif = System.currentTimeMillis() - time;
 		System.out.println("PROGRAM FINISHED - TIME: " + dif);

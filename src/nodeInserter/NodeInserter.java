@@ -1,5 +1,6 @@
 package nodeInserter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,6 +153,98 @@ public abstract class NodeInserter {
 		
 		return startId + ID_COUNTER;
 	}
+	
+
+	
+	/**
+	 * Insert the new vertice in the given embedding and connect it to <code>noOfEdges</code> vertices.
+	 * @param noOfEdges number of edges
+	 * @return the id of the embedding inserted last
+	 */
+	public int insertEdges(int noOfEdges) {
+		if (vertices.isEmpty() || noOfEdges <= 0) {
+			System.out.println("empty vertices");
+			return startId;
+		}
+		if (noOfEdges >= vertices.size()) {
+			System.out.println("too many edges");
+			return startId;
+		}
+		
+		// get all sets that the new vertex should be connected to
+		List<List<Integer>> vertexSets = combination(vertices, noOfEdges);
+		
+		
+		for (List<Integer> set : vertexSets) {
+			// Insert the new vertex into all the given embeddings in all possible ways
+			// such that it is connected to the first given vertex
+			createEdgeToFirstVertex(set.get(0));
+			
+			// Connect the new vertex to the remaining vertices
+			for (int i=1; i<set.size(); i++) {
+				insertionPossible = false;
+				List<IntermediateEmbedding> tempIntEmbs = new LinkedList<IntermediateEmbedding>();
+				for (IntermediateEmbedding iEmb : intermediateEmbeddings) {
+					tempIntEmbs.addAll(connectNodes(iEmb, iEmb.newVertexId, set.get(i)));
+				}
+				intermediateEmbeddings = tempIntEmbs;
+			}
+
+			// fill the new embeddings
+			for (IntermediateEmbedding ie : intermediateEmbeddings) {
+				newEmbeddings.add(ie.emb);
+				newVertexIds.put(ie.emb.getId(), ie.newVertexId);
+				return startId + ID_COUNTER;
+			}
+		}
+
+		return startId + ID_COUNTER;
+	}
+	
+	
+	/**
+	 * Returns all combinations of k elements.
+	 * @param elements list with elements
+	 * @param k        number of elements in a set
+	 * @return         all combinations (elements.size() choose k)
+	 */
+	private List<List<Integer>> combination(List<Integer> elements, int k) {
+		
+		if (k == 1) {
+			// make set out of all remaining elements
+			List<List<Integer>> combis = new LinkedList<List<Integer>>();
+			for (int i : elements) {
+				List<Integer> set = new LinkedList<Integer>();
+				set.add(i);
+				combis.add(set);
+			}
+			return combis;
+		}
+		else {
+			// recurse
+			List<List<Integer>> combis = new LinkedList<List<Integer>>();
+			for (int i=0; i<elements.size() - k + 1; i++) {
+				List<Integer> newElements = new ArrayList<Integer>();
+				for (int j=i+1; j<elements.size(); j++) {
+					newElements.add(elements.get(j));
+				}
+				List<List<Integer>> newCombis = combination(newElements, k-1);
+
+				for (List<Integer> set : newCombis) {
+					set.add(elements.get(i));
+				}
+				
+				combis.addAll(newCombis);
+			}
+			return combis;
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Returns the newly created embeddings.

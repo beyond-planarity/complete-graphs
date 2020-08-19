@@ -7,14 +7,14 @@ public class DFSTestKPlanar extends DFSTestCase {
 	
 	protected DFSTestKPlanar() {
 
-	int PLANARITY = 2;
+	int PLANARITY = 5;
 	CLASS_NAME    = "dfs" + PLANARITY + "planar";
 	USE_GAPS   = false;
 	
-	START = 0;
-	END   = 1000000000;
+	START = 7;
+	END   = 7;
 
-	FINAL_INDEX1 = 10;
+	FINAL_INDEX1 = 5;
 
 	NodeInserter inserter = new NodeInserterKPlanar(PLANARITY);
 	setNodeInserter(inserter);
@@ -31,9 +31,9 @@ public class DFSTestKPlanar extends DFSTestCase {
 		//test.prepareDrawingComplete(8);
 		//test.drawComplete(8);
 
-		test.initBipartite();
+		//test.initBipartite();
 		test.testBipartite();
-		//test.prepareDrawingBipartite(5,8);
+		//test.prepareDrawingBipartite(6,7);
 		//test.drawBipartite(5,8);
 
 		long dif = System.currentTimeMillis() - time;

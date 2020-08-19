@@ -44,8 +44,8 @@ public class GMLWriter {
 	private static final String TRUE            = "1";
 	private static final String FALSE           = "0";
 	private static final String COLOR_SET1      = STR_DELIM + "#0000FF" + STR_DELIM;
-	private static final String COLOR_SET2      = STR_DELIM + "#008000" + STR_DELIM;
-	private static final String COLOR_CROSSING  = STR_DELIM + "#FF0000" + STR_DELIM;
+	private static final String COLOR_SET2      = STR_DELIM + "#FF0000" + STR_DELIM;
+	private static final String COLOR_CROSSING  = STR_DELIM + "#D228C2" + STR_DELIM;
 	private static final String COLOR_TEXT      = STR_DELIM + "#FFFFFF" + STR_DELIM;
 	private static final String COLOR_OUTLINE   = STR_DELIM + "#000000" + STR_DELIM;
 	private static final String COLOR_EDGE      = STR_DELIM + "#000000" + STR_DELIM;

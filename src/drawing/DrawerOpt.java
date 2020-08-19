@@ -19,19 +19,21 @@ import data.Constant;
 import data.Edge;
 import data.Embedding;
 import data.EnumColor;
+import data.Metadata;
 import data.Vertex;
+import io.safeLoad.PathChooser;
 import io.safeLoad.SafeLoad;
 
 /**
- * Class for showing drawings calculated with the DFS-like approach in a window.
+ * Class for showing drawings calculated with the normal approach in a window.
  * @author tommy
  *
  */
-public class DrawerDFS implements ActionListener  {
+public class DrawerOpt implements ActionListener  {
 
 	private String   folderName;
 	private String   windowTitle;
-	private String[] fileNames;
+	private Metadata metadata;
 	
 	private Frame      mainFrame;
 	private ScrollPane scrollPane;
@@ -39,8 +41,12 @@ public class DrawerDFS implements ActionListener  {
 	
 	private Label crossingsColLabel;
 	private Label twoPartitionColLabel;
+	private Label newNodeColLabel;
 	private Label numberLabel;
+	private Label graphIdLabel;
+	private Label sourceGraphIdLabel;
 	private Label crossingLabel;
+	private Label insertionPossibleLabel;
 	private Panel controlPanel;
 	private Panel drawingPanel;
 	
@@ -48,34 +54,43 @@ public class DrawerDFS implements ActionListener  {
 
 	private Button nextDrawing;
 	private Button prevDrawing;
+	
+	private Button export;
 
 	private Embedding drawing;
-	private int       fileNo;
-	private int       crossingNo;
+	private int       drawingNr;
+	private int       drawingId;
 	
-	
+	private int     sourceGraphId;
+	private int     crossingNo;
+	private boolean insertionPossible;
+
 	/**
-	 * Creates a new <code>DrawerDFS</code>.
-	 * @param folderName name of the folder that contains the drawings
+	 * Creates a new <code>DrawerOpt</code>.
+	 * @param folderName	name of the folder that contains the drawings
+	 * @param windowTitle	titel of this window
 	 */
-	public DrawerDFS(String folderName) {
-		this.windowTitle  = folderName;
+	public DrawerOpt(String folderName, String windowTitle) {
+		this.windowTitle  = windowTitle;
 		this.folderName   = folderName;
-		this.fileNames    = SafeLoad.getEmbeddingFiles(folderName);
-		this.fileNo    = 0;
+		this.metadata     = SafeLoad.loadMetadata(folderName);
+		this.drawingNr    = 0;
+		this.drawingId    = metadata.getIdStartEmbedding();
 				
 		loadEmbedding();
 		prepareGUI();
 	}
-	
+
 	/**
 	 * Loads the current embedding.
 	 */
 	private void loadEmbedding() {
-		this.drawing          = SafeLoad.loadEmbedding(folderName, fileNames[fileNo]);
+		this.drawing          = SafeLoad.loadEmbedding(folderName, drawingId);
+		this.sourceGraphId    = drawing.getSourceEmbeddingId();
 		this.crossingNo       = drawing.getCrossingNumber();
+		this.drawingNr        = drawing.getDrawingNr();
 	}
-	
+
 	/**
 	 * Prepares for showing the current drawing.
 	 */
@@ -83,30 +98,25 @@ public class DrawerDFS implements ActionListener  {
 		loadEmbedding();
 		canvasDrawing.setDrawing(drawing);
 	}
-	
+
 	/**
 	 * Shows the next drawing.
 	 */
 	private void nextEmbedding() {
-		fileNo++;
-		if (fileNo >= fileNames.length) {
-			fileNo = 0;
-		}
+		drawingId = drawing.getNextEmbedding();
 		loadDrawing();
 		updatePainting();
 	}
+
 	/**
 	 * Shows the previous drawing.
 	 */
 	private void previousEmbedding() {
-		fileNo--;
-		if (fileNo < 0) {
-			fileNo = fileNames.length - 1;
-		}
+		drawingId = drawing.getPrevEmbedding();
 		loadDrawing();
 		updatePainting();
-	}
-	
+	}	
+
 	/**
 	 * Updates the window.
 	 */
@@ -144,28 +154,48 @@ public class DrawerDFS implements ActionListener  {
 		twoPartitionColLabel = new Label();
 		twoPartitionColLabel.setAlignment(Label.LEFT);
 		twoPartitionColLabel.setText(Constant.SETS_COLOR);
+		newNodeColLabel = new Label();
+		newNodeColLabel.setAlignment(Label.LEFT);
+		newNodeColLabel.setText(Constant.NEW_COLOR);
 		numberLabel = new Label();
 		numberLabel.setAlignment(Label.LEFT);
+		graphIdLabel = new Label();
+		graphIdLabel.setAlignment(Label.LEFT);
+		sourceGraphIdLabel = new Label();
+		sourceGraphIdLabel.setAlignment(Label.LEFT);
 		crossingLabel = new Label();
 		crossingLabel.setAlignment(Label.LEFT);
+		insertionPossibleLabel = new Label();
+		insertionPossibleLabel.setAlignment(Label.LEFT);
 		
 		nextDrawing = new Button("NEXT");
 		nextDrawing.addActionListener(this);
 		prevDrawing = new Button("PREV");
 		prevDrawing.addActionListener(this);
 
+		export = new Button("EXPORT");
+		export.addActionListener(this);
+		
 
 		controlPanel = new Panel();
 		controlPanel.setLayout(new GridLayout(0,1,0,5));
 		controlPanel.add(crossingsColLabel);
 		controlPanel.add(twoPartitionColLabel);
+		controlPanel.add(newNodeColLabel);
 		controlPanel.add(new Label(""));
 		controlPanel.add(numberLabel);
+		controlPanel.add(new Label(""));
+		controlPanel.add(graphIdLabel);
+		controlPanel.add(sourceGraphIdLabel);
 		controlPanel.add(crossingLabel);
+		controlPanel.add(insertionPossibleLabel);
+		//controlPanel.add(new Label(""));
 		controlPanel.add(new Label(""));
 		controlPanel.add(nextDrawing);
 		controlPanel.add(prevDrawing);
 		controlPanel.add(new Label(""));
+		controlPanel.add(new Label(""));
+		controlPanel.add(export);
 		
 		drawingPanel = new Panel();
 		drawingPanel.setLayout(new FlowLayout());
@@ -174,13 +204,16 @@ public class DrawerDFS implements ActionListener  {
 		mainPanel.add(drawingPanel);
 		mainFrame.setVisible(true);  
 	}
-	
+
 	/**
 	 * Sets the information for the current drawings. 
 	 */
 	private void setLabels() {
-		numberLabel.setText("Number: " + (fileNo+1) + " of " + fileNames.length);
+		numberLabel.setText("Number: " + drawingNr + " of " + metadata.getNumberEmbeddingsTotal());
+		graphIdLabel.setText("Graph ID: " + drawingId); 
+		sourceGraphIdLabel.setText("Source Graph ID: " + sourceGraphId);
 		crossingLabel.setText("Crossings: " + crossingNo);
+		insertionPossibleLabel.setText("Insertion possible: " + insertionPossible);
 	}
 
 	/**
@@ -217,7 +250,7 @@ public class DrawerDFS implements ActionListener  {
 			setBackground(EnumColor.DRAWING_BACK.getColor());
 			setSize(Constant.CANVAS_WIDTH, Constant.CANVAS_HEIGHT);
 		}
-		
+
 		/**
 		 * Show the mapping of all vertices.
 		 * @param show	true, if mapping should be shown 
@@ -225,6 +258,7 @@ public class DrawerDFS implements ActionListener  {
 		public void showMapping(boolean show) {
 			areVerticesMapped = show;
 		}
+
 		
 		/**
 		 * Sets the current drawing.
@@ -288,5 +322,21 @@ public class DrawerDFS implements ActionListener  {
 		else if (e.getSource().equals(prevDrawing)) {
 			previousEmbedding();
 		}
+		else if (e.getSource().equals(export)) {
+			atExportPressed();
+		}
 	}
+
+	
+	/**
+	 * Export the drawing that is currently shown
+	 */
+	private void atExportPressed() {
+		String safePath = PathChooser.displayExportFileChooser(mainFrame);
+		if (safePath != null) {
+			SafeLoad.exportChoosePath(drawing, safePath);
+		}
+	}
+	
+	
 }

@@ -604,6 +604,17 @@ public class Embedding {
 		return deg;
 	}
 	
+	
+	public int getNumberOfRealEdges() {
+		int edges = 0;
+		for (Vertex v : vertices.values()) {
+			if (!v.isCrossing()) {
+				edges += getVertexDegree(v.getId());
+			}
+		}
+		return edges / 2;
+	}
+	
 	/**
 	 * Returns the outgoing edges of the specified vertex.
 	 * @param int 	the vertex id

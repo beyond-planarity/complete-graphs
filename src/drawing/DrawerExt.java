@@ -14,21 +14,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import data.Constant;
 import data.Edge;
 import data.Embedding;
 import data.EnumColor;
 import data.Metadata;
 import data.Vertex;
+import io.safeLoad.PathChooser;
 import io.safeLoad.SafeLoad;
 
 /**
- * Class for showing drawings calculated with the normal approach in a window.
+ * Class for showing the drawings in a window (old version!!!).
  * @author tommy
  *
  */
-public class DrawerOpt implements ActionListener  {
+public class DrawerExt implements ActionListener  {
 
 	private String   folderName;
 	private String   windowTitle;
@@ -42,32 +42,38 @@ public class DrawerOpt implements ActionListener  {
 	private Label twoPartitionColLabel;
 	private Label newNodeColLabel;
 	private Label numberLabel;
+	private Label numberTopoLabel;
 	private Label graphIdLabel;
 	private Label sourceGraphIdLabel;
+	private Label referenceGraphIdLabel;
 	private Label crossingLabel;
 	private Label insertionPossibleLabel;
 	private Panel controlPanel;
 	private Panel drawingPanel;
 	
 	private MyCanvas canvasDrawing;
+	private MyCanvas canvasReference;
 
+	private Button showMapping;
 	private Button nextDrawing;
 	private Button prevDrawing;
+	private Button nextTopoDrawing;
+	private Button prevTopoDrawing;
+	
+	private Button export;
 
 	private Embedding drawing;
 	private int       drawingNr;
 	private int       drawingId;
+	private Embedding referenceDrawing;
 	
 	private int     sourceGraphId;
+	private int     referenceGraphId;
 	private int     crossingNo;
 	private boolean insertionPossible;
+	private boolean isMappingShowed = false;
 
-	/**
-	 * Creates a new <code>DrawerOpt</code>.
-	 * @param folderName	name of the folder that contains the drawings
-	 * @param windowTitle	titel of this window
-	 */
-	public DrawerOpt(String folderName, String windowTitle) {
+	public DrawerExt(String folderName, String windowTitle) {
 		this.windowTitle  = windowTitle;
 		this.folderName   = folderName;
 		this.metadata     = SafeLoad.loadMetadata(folderName);
@@ -77,55 +83,63 @@ public class DrawerOpt implements ActionListener  {
 		loadEmbedding();
 		prepareGUI();
 	}
-
-	/**
-	 * Loads the current embedding.
-	 */
+	
 	private void loadEmbedding() {
 		this.drawing          = SafeLoad.loadEmbedding(folderName, drawingId);
 		this.sourceGraphId    = drawing.getSourceEmbeddingId();
+		this.referenceGraphId = drawing.getReferenceEmbeddingId();
 		this.crossingNo       = drawing.getCrossingNumber();
 		this.drawingNr        = drawing.getDrawingNr();
+		referenceDrawing      = SafeLoad.loadEmbedding(folderName, referenceGraphId);
+		insertionPossible     = referenceDrawing.isInsertionPossible();
 	}
-
-	/**
-	 * Prepares for showing the current drawing.
-	 */
+	
 	private void loadDrawing() {
 		loadEmbedding();
 		canvasDrawing.setDrawing(drawing);
+		canvasReference.setDrawing(referenceDrawing);
 	}
-
-	/**
-	 * Shows the next drawing.
-	 */
+	
 	private void nextEmbedding() {
 		drawingId = drawing.getNextEmbedding();
 		loadDrawing();
 		updatePainting();
 	}
-
-	/**
-	 * Shows the previous drawing.
-	 */
+	
 	private void previousEmbedding() {
 		drawingId = drawing.getPrevEmbedding();
 		loadDrawing();
 		updatePainting();
-	}	
+	}
 
-	/**
-	 * Updates the window.
-	 */
+	private void nextTopoEmbedding() {
+		drawingId = drawing.getNextTopoEmbedding();
+		loadDrawing();
+		updatePainting();
+	}
+	
+	private void previousTopoEmbedding() {
+		drawingId = drawing.getPrevTopoEmbedding();
+		loadDrawing();
+		updatePainting();
+	}
+	
+	private void atShowMappingPressed() {
+		isMappingShowed = !isMappingShowed;
+		canvasDrawing.showMapping(isMappingShowed);
+		updatePainting();
+	}
+	
+	
+	
 	private void updatePainting() {
 		setLabels();
 		mainFrame.repaint();
 		canvasDrawing.repaint();
+		canvasReference.repaint();
 	}
 
-	/**
-	 * Initializes the window.
-	 */
+	
 	private void prepareGUI() {
 		mainFrame = new Frame(windowTitle);
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -133,7 +147,7 @@ public class DrawerOpt implements ActionListener  {
 				mainFrame.dispose();
 			}        
 		});
-		mainFrame.setSize(Constant.WINDOW_WIDTH,Constant.WINDOW_HEIGHT);
+		mainFrame.setSize(Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
 		mainFrame.setLayout(new FlowLayout());
 		
 		scrollPane = new ScrollPane();
@@ -156,19 +170,34 @@ public class DrawerOpt implements ActionListener  {
 		newNodeColLabel.setText(Constant.NEW_COLOR);
 		numberLabel = new Label();
 		numberLabel.setAlignment(Label.LEFT);
+		numberTopoLabel = new Label();
+		numberTopoLabel.setAlignment(Label.LEFT);
 		graphIdLabel = new Label();
 		graphIdLabel.setAlignment(Label.LEFT);
 		sourceGraphIdLabel = new Label();
 		sourceGraphIdLabel.setAlignment(Label.LEFT);
+		referenceGraphIdLabel = new Label();
+		referenceGraphIdLabel.setAlignment(Label.LEFT);
 		crossingLabel = new Label();
 		crossingLabel.setAlignment(Label.LEFT);
 		insertionPossibleLabel = new Label();
 		insertionPossibleLabel.setAlignment(Label.LEFT);
+
+		showMapping = new Button();
+		showMapping.addActionListener(this);
 		
 		nextDrawing = new Button("NEXT");
 		nextDrawing.addActionListener(this);
 		prevDrawing = new Button("PREV");
 		prevDrawing.addActionListener(this);
+		
+		nextTopoDrawing = new Button("TOPO NEXT");
+		nextTopoDrawing.addActionListener(this);
+		prevTopoDrawing = new Button("TOPO PREV");
+		prevTopoDrawing.addActionListener(this);
+				
+		export = new Button("EXPORT");
+		export.addActionListener(this);
 
 		controlPanel = new Panel();
 		controlPanel.setLayout(new GridLayout(0,1,0,5));
@@ -177,15 +206,24 @@ public class DrawerOpt implements ActionListener  {
 		controlPanel.add(newNodeColLabel);
 		controlPanel.add(new Label(""));
 		controlPanel.add(numberLabel);
+		controlPanel.add(numberTopoLabel);
 		controlPanel.add(new Label(""));
 		controlPanel.add(graphIdLabel);
 		controlPanel.add(sourceGraphIdLabel);
+		controlPanel.add(referenceGraphIdLabel);
 		controlPanel.add(crossingLabel);
 		controlPanel.add(insertionPossibleLabel);
 		//controlPanel.add(new Label(""));
+		controlPanel.add(showMapping);
 		controlPanel.add(new Label(""));
 		controlPanel.add(nextDrawing);
 		controlPanel.add(prevDrawing);
+		controlPanel.add(new Label(""));
+		controlPanel.add(nextTopoDrawing);
+		controlPanel.add(prevTopoDrawing);
+		controlPanel.add(new Label(""));
+		controlPanel.add(new Label(""));
+		controlPanel.add(export);
 		
 		drawingPanel = new Panel();
 		drawingPanel.setLayout(new FlowLayout());
@@ -194,21 +232,18 @@ public class DrawerOpt implements ActionListener  {
 		mainPanel.add(drawingPanel);
 		mainFrame.setVisible(true);  
 	}
-
-	/**
-	 * Sets the information for the current drawings. 
-	 */
+	
 	private void setLabels() {
 		numberLabel.setText("Number: " + drawingNr + " of " + metadata.getNumberEmbeddingsTotal());
+		numberTopoLabel.setText("Topo. different graphs: " + metadata.getNumberEmbeddingsTopoDifferent());
 		graphIdLabel.setText("Graph ID: " + drawingId); 
 		sourceGraphIdLabel.setText("Source Graph ID: " + sourceGraphId);
+		referenceGraphIdLabel.setText("Reference Graph ID: " + referenceGraphId);
 		crossingLabel.setText("Crossings: " + crossingNo);
 		insertionPossibleLabel.setText("Insertion possible: " + insertionPossible);
+		showMapping.setLabel(isMappingShowed ? "UNMAP LABELS" : "MAP LABELS");
 	}
 
-	/**
-	 * Shows the window.
-	 */
 	public void show(){
 		setLabels();
 		
@@ -218,42 +253,29 @@ public class DrawerOpt implements ActionListener  {
 		
 		drawingPanel.add(new Label(""));
 		
+		canvasReference = new MyCanvas();
+		canvasReference.setDrawing(referenceDrawing);
+		drawingPanel.add(canvasReference);
+		
 		mainFrame.setVisible(true);  
 	} 
 
 
-	/**
-	 * Class for showing the current drawing.
-	 * @author tommy
-	 *
-	 */
 	@SuppressWarnings("serial")
 	class MyCanvas extends Canvas {
 		
 		private Embedding emb;
 		private boolean   areVerticesMapped = false;
 
-		/**
-		 * Creates a new <code>MyCanvas</code>.
-		 */
 		public MyCanvas () {
 			setBackground(EnumColor.DRAWING_BACK.getColor());
 			setSize(Constant.CANVAS_WIDTH, Constant.CANVAS_HEIGHT);
 		}
-
-		/**
-		 * Show the mapping of all vertices.
-		 * @param show	true, if mapping should be shown 
-		 */
+		
 		public void showMapping(boolean show) {
 			areVerticesMapped = show;
 		}
-
 		
-		/**
-		 * Sets the current drawing.
-		 * @param drawing the new drawing to show
-		 */
 		public void setDrawing(Embedding drawing) {
 			this.emb = drawing;
 		}
@@ -312,6 +334,29 @@ public class DrawerOpt implements ActionListener  {
 		else if (e.getSource().equals(prevDrawing)) {
 			previousEmbedding();
 		}
+		else if (e.getSource().equals(nextTopoDrawing)) {
+			nextTopoEmbedding();
+		}
+		else if (e.getSource().equals(prevTopoDrawing)) {
+			previousTopoEmbedding();
+		}
+		else if (e.getSource().equals(showMapping)) {
+			atShowMappingPressed();
+		}
+		else if (e.getSource().equals(export)) {
+			atExportPressed();
+		}
 		
 	}
+
+	/**
+	 * Export the drawing that is currently shown
+	 */
+	private void atExportPressed() {
+		String safePath = PathChooser.displayExportFileChooser(mainFrame);
+		if (safePath != null) {
+			SafeLoad.exportChoosePath(drawing, safePath);
+		}
+	}
+	
 }

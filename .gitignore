@@ -1,0 +1,10 @@
+/target/
+bin/
+.settings/
+.classpath
+.project
+*.o
+*.obj
+*.lib
+*.so
+*.dll

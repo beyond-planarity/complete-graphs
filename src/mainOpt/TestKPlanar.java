@@ -13,7 +13,7 @@ public class TestKPlanar extends TestCase {
 	
 	protected TestKPlanar() {
 		
-	    int PLANARITY  = 2;
+	    int PLANARITY  = 1;
 		
 		CLASS_NAME     = "opt" + PLANARITY + "planar";
 		USE_GAPS       = false;
@@ -22,13 +22,42 @@ public class TestKPlanar extends TestCase {
 		TEMP_AVAILABLE = false;
 		
 		START_INDEX    = 4;
-		END_INDEX      = 12;
+		END_INDEX      = 10;
 		
 		Tuple[] biIndices = {
+				new Tuple(2,2),
+				new Tuple(2,3),
+				new Tuple(3,3),
+				new Tuple(3,4),
 				new Tuple(4,4),
-				new Tuple(4,5)
+				new Tuple(4,5),
+				new Tuple(5,5),
+				new Tuple(5,6),
+				new Tuple(6,6)
 		};
-		INDICES = biIndices;
+		
+		Tuple[] biIndices2 = {
+				new Tuple(2,2),
+				new Tuple(2,3),
+				new Tuple(2,4),
+				new Tuple(2,5),
+				new Tuple(2,6),
+				new Tuple(3,6),
+				new Tuple(4,6),
+				new Tuple(5,6),
+				new Tuple(6,6)
+		};
+		
+		Tuple[] biIndices3 = {
+				new Tuple(2,2),
+				new Tuple(2,3),
+				new Tuple(2,4),
+				new Tuple(2,5),
+				new Tuple(3,5),
+				new Tuple(4,5),
+				new Tuple(5,5)
+		};
+		INDICES = biIndices3;
 
 		NodeInserter inserter = new NodeInserterKPlanar(PLANARITY);
 		setNodeInserter(inserter);
@@ -42,9 +71,9 @@ public class TestKPlanar extends TestCase {
 		long time = System.currentTimeMillis();
 		
 		test.initComplete();
-		test.testComplete();
-		//test.prepareDrawingComplete(5);
-		//test.drawComplete(5);
+		//test.testComplete();
+		//test.prepareDrawingComplete(4);
+		//test.drawComplete(4);
 
 		//test.initBipartite();
 		//test.testBipartite();

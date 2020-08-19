@@ -38,4 +38,11 @@ public class Constant {
 	public static final String CROSSING_COLOR = "Crossings are lilac.";
 	public static final String SETS_COLOR     = "Nodes of the bip. sets are blue and red.";
 	public static final String NEW_COLOR      = "Currently added nodes are green.";
+	
+	// text for file chooser
+	public static final String CONFIRM_FILE_OVERWRITE_TEXT  = "Are you sure you want to overwrite the file?";
+	public static final String CONFIRM_FILE_OVERWRITE_TITLE = "Warning";
+	public static final String TITLE_FILE_CHOOSER           = "Export as GML";
+	
+	
 }

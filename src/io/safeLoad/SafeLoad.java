@@ -382,6 +382,24 @@ public class SafeLoad {
 	}
 	
 	/**
+	 * Exports the specified embedding to a gml-file with the specified name.
+	 * @param emb		embedding
+	 * @param safePath	target file name
+	 * @return			true, if exporting was successful
+	 */
+	public static boolean exportChoosePath(Embedding emb, String safePath) {	
+		GMLWriter gmlWriter = new GMLWriter(safePath, emb);
+		try {
+			gmlWriter.write();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	
+	/**
 	 * Exports all embeddings of the specified folder into the folder gml<code>sourceFolder</code>.
 	 * @param sourceFolder	folder containing the embeddings to export
 	 * @return				true, if exporting was successful

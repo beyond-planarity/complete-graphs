@@ -19,8 +19,8 @@ public class TestGapPlanar extends TestCase {
 		STOP_AFTER     = 1000000;
 		TEMP_AVAILABLE = false;
 		
-		START_INDEX    = 9;
-		END_INDEX      = 9; 
+		START_INDEX    = 4;
+		END_INDEX      = 11; 
 		
 		Tuple[] biIndices = {
 				new Tuple(4,8),
@@ -38,13 +38,13 @@ public class TestGapPlanar extends TestCase {
 
 		long time = System.currentTimeMillis();
 		
-		//test.initComplete();
-		//test.testComplete();
+		test.initComplete();
+		test.testComplete();
 		//test.prepareDrawingComplete(8);
 		//test.drawComplete(8);
 
 		//test.initBipartite();
-		test.testBipartite();
+		//test.testBipartite();
 		//test.prepareDrawingBipartite(2,4,false);
 		//test.drawBipartite(2,4);
 

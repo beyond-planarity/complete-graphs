@@ -267,4 +267,5 @@ public class DrawingPositioner {
 			v.setStrechedY(strechedY);
 		}
 	}
+	
 }
